@@ -76,19 +76,24 @@
     <p>🕒 Čas obřadu: 12:30</p>
     <p>📍 Místo: <a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></p>
 
-    <form onsubmit="event.preventDefault(); alert('Díky za vyplnění, těšíme se na vás!');">
-        <input type="text" placeholder="Vaše jméno" required>
-        <select required>
-            <option value="" disabled selected>Zůčastníte se?</option>
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="c1eabb37-b92b-4e46-98ea-24aa8783b8a3">
+        
+        <input type="text" name="name" placeholder="Vaše jméno" required>
+        
+        <select name="attendance" required>
+            <option value="" disabled selected>Zúčastníte se?</option>
             <option value="yes">Ano</option>
             <option value="no">Ne</option>
         </select>
-        <select required>
+        
+        <select name="accommodation" required>
             <option value="" disabled selected>Kde přespíte?</option>
             <option value="zamek">Zámek</option>
-            <option value="mesto">Stanové město</option>
-            <option value="mesto">Nepřespím</option>
+            <option value="stanove_mesto">Stanové město</option>
+            <option value="neprespim">Nepřespím</option>
         </select>
+        
         <button type="submit">ODESLAT</button>
     </form>
 </body>
