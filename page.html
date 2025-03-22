@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full screen height */
+            text-align: center;
+            flex-direction: column;
+            overflow: hidden; /* Disable scrolling */
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        a {
+            color: cyan;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input, select, button {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            padding: 5px 10px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        @media (max-width: 400px) {
+            h1 { font-size: 20px; }
+            p, a, input, select, button { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Jste zváni</h1>
+    <p><strong>Na svatbu Aničky & Vojty</strong></p>
+    <p>📅 Datum: 2. srpna 2025</p>
+    <p>🕒 Čas obřadu: 12:30</p>
+    <p>📍 Místo: <a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></p>
+
+    <form onsubmit="event.preventDefault(); alert('Díky za vyplnění, těšíme se na vás!');">
+        <input type="text" placeholder="Vaše jméno" required>
+        <select required>
+            <option value="" disabled selected>Zůčastníte se?</option>
+            <option value="yes">Ano</option>
+            <option value="no">Ne</option>
+        </select>
+        <select required>
+            <option value="" disabled selected>Kde přespíte?</option>
+            <option value="zamek">Zámek</option>
+            <option value="mesto">Stanové město</option>
+            <option value="mesto">Nepřespím</option>
+        </select>
+        <button type="submit">ODESLAT</button>
+    </form>
+</body>
+</html>

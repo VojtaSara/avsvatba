@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Cellular Automaton</title>
+    <style>
+        body { background: black; color: white; font-family: monospace; margin: 0; overflow: hidden; }
+        pre { white-space: pre; font-size: 12px; line-height: 12px; letter-spacing: 1px; }
+        .heart { color: red; }
+        #centerButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: black;
+            color: white;
+            border: 0.5px solid white;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10; /* Make sure it stays on top */
+            font-family: monospace; 
+        }
+        #centerButton:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <pre id="ascii"></pre>
+    <button id="centerButton" onclick="window.location.href='page.html'">click me</button>
+    <script>
+        const tickSpeed = 33;
+        const directionChangeChance = 0.2;
+        const newTendrilChance = 0.7;
+        const passiveSpreadChance = 0.01; 
+        const heartSymbol = '♥';
+
+        let cols = Math.floor(window.innerWidth / 7);
+        let rows = Math.floor(window.innerHeight / 12);
+        let grid = Array.from({ length: rows }, () => Array(cols).fill(' '));
+
+        let entities = [];
+
+        function placeEntity(symbol) {
+            let x, y;
+            do {
+                x = Math.floor(Math.random() * cols);
+                y = Math.floor(Math.random() * rows);
+            } while (grid[y][x] !== ' ');
+
+            grid[y][x] = symbol;
+            let directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]];
+            let [dx, dy] = directions[Math.floor(Math.random() * directions.length)];
+            entities.push({ x, y, symbol, dx, dy });
+        }
+
+        placeEntity('A');
+        placeEntity('V');
+
+        function updateGrid() {
+            let newEntities = [];
+
+            for (let entity of entities) {
+                let { x, y, symbol, dx, dy } = entity;
+
+                if (Math.random() < directionChangeChance) {
+                    let directions = [
+                        [1, 0], [-1, 0], [0, 1], [0, -1],
+                        [1, 1], [-1, -1], [1, -1], [-1, 1]
+                    ];
+                    [dx, dy] = directions[Math.floor(Math.random() * directions.length)];
+                }
+
+                let nx = x + dx;
+                let ny = y + dy;
+
+                if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+                    if (grid[ny][nx] === ' ') {
+                        grid[ny][nx] = symbol;
+                        newEntities.push({ x: nx, y: ny, symbol, dx, dy });
+                    } else {
+                        [dx, dy] = [-dx, -dy];
+                        newEntities.push({ x, y, symbol, dx, dy });
+                    }
+                } else {
+                    [dx, dy] = [-dx, -dy];
+                    newEntities.push({ x, y, symbol, dx, dy });
+                }
+            }
+
+            if (Math.random() < newTendrilChance) {
+                let possibleStarts = [];
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        if (grid[i][j] === 'A' || grid[i][j] === 'V') {
+                            possibleStarts.push({ x: j, y: i, symbol: grid[i][j] });
+                        }
+                    }
+                }
+                if (possibleStarts.length > 0) {
+                    let start = possibleStarts[Math.floor(Math.random() * possibleStarts.length)];
+                    let directions = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]];
+                    let [dx, dy] = directions[Math.floor(Math.random() * directions.length)];
+                    newEntities.push({ x: start.x, y: start.y, symbol: start.symbol, dx, dy });
+                }
+            }
+
+            // Passive spread
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (grid[y][x] === ' ') {
+                        let neighbors = [
+                            [x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1],
+                            [x + 1, y + 1], [x - 1, y - 1], [x + 1, y - 1], [x - 1, y + 1]
+                        ];
+                        for (let [nx, ny] of neighbors) {
+                            if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+                                let neighborSymbol = grid[ny][nx];
+                                if ((neighborSymbol === 'A' || neighborSymbol === 'V' || neighborSymbol === heartSymbol)
+                                    && Math.random() < passiveSpreadChance) {
+                                    grid[y][x] = neighborSymbol;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Force all A-V neighbor pairs to become hearts
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (grid[y][x] === 'A' || grid[y][x] === 'V') {
+                        let symbol = grid[y][x];
+                        let target = symbol === 'A' ? 'V' : 'A';
+                        let neighbors = [
+                            [x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1],
+                            [x + 1, y + 1], [x - 1, y - 1], [x + 1, y - 1], [x - 1, y + 1]
+                        ];
+                        for (let [nx, ny] of neighbors) {
+                            if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+                                if (grid[ny][nx] === target) {
+                                    grid[y][x] = heartSymbol;
+                                    grid[ny][nx] = heartSymbol;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            entities = newEntities;
+            render();
+        }
+
+        function render() {
+            let output = '';
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (grid[y][x] === heartSymbol) {
+                        output += '<span class="heart">' + heartSymbol + '</span>';
+                    } else {
+                        output += grid[y][x];
+                    }
+                }
+                output += '\n';
+            }
+            document.getElementById('ascii').innerHTML = output;
+        }
+
+        setInterval(updateGrid, tickSpeed);
+    </script>
+</body>
+</html>
