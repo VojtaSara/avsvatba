@@ -4,123 +4,303 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="rose.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <title>Svatební Pozvánka</title>
     <style>
         body {
-            background-color: #FFF8F0; /* Jemná krémová */
-            color: #5C3D2E; /* Teplá hnědá */
-            font-family: "Garamond", serif;
+            background-color: #fff;
+            color: #4A4A4A;
+            font-family: 'Source Sans Pro', sans-serif;
             margin: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            overflow: hidden;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background-image: linear-gradient(to bottom, #ffffff, #fdfbf9);
         }
 
-        .banner {
-            width: 100%;
+        .container {
             max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px solid rgba(200, 155, 104, 0.1);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #8B5E3C;
+            text-align: center;
+            font-weight: normal;
+            letter-spacing: 1px;
         }
 
         h1 {
-            color: #8B5E3C; /* Hlubší hnědozlatá */
-            margin: 20px 0 10px;
+            font-size: 42px;
+            margin: 0 0 30px;
+        }
+
+        h2 {
             font-size: 28px;
+            margin: 0 0 25px;
         }
 
         .details {
-            margin: 5px 0;
+            margin: 8px 0;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .details strong {
+            color: #8B5E3C;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 24px;
+            text-align: center;
+            color: #8B5E3C;
+            margin: 40px 0;
+            line-height: 1.6;
+        }
+
+        .story {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
             font-size: 18px;
+            line-height: 1.8;
         }
 
         a {
-            color: #C89B68; /* Jemná zlatá */
+            color: #C89B68;
             text-decoration: none;
-            font-size: 18px;
+            transition: color 0.3s ease;
         }
 
         a:hover {
-            color: #A4764A;
-            text-decoration: underline;
+            color: #8B5E3C;
         }
 
         form {
-            margin-top: 20px;
+            margin-top: 40px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto;
         }
 
-        input, select, button {
-            background-color: #FAF0E6; /* Světle béžová */
-            color: #5C3D2E;
-            border: 1px solid #C89B68;
-            padding: 8px 12px;
-            font-family: "Garamond", serif;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #8B5E3C;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .form-group .helper-text {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        input, select {
+            background-color: #fff;
+            color: #4A4A4A;
+            border: 1px solid #E0D5C8;
+            padding: 12px 16px;
+            font-family: inherit;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #C89B68;
+            box-shadow: 0 0 0 3px rgba(200, 155, 104, 0.1);
         }
 
         button {
             background-color: #C89B68;
             color: white;
+            border: none;
+            padding: 14px 28px;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: 0.3s ease-in-out;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+            letter-spacing: 1px;
         }
 
         button:hover {
-            background-color: #A4764A;
+            background-color: #8B5E3C;
+            transform: translateY(-1px);
+        }
+
+        .info-box {
+            background: rgba(200, 155, 104, 0.05);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .contact-footer {
+            text-align: center;
+            color: #8B5E3C;
+            font-size: 16px;
+            margin-top: 20px;
+            font-style: italic;
         }
 
         .footer-img {
-            width: 50%; /* Make it half the original width */
-            max-width: 200px; /* Limit maximum size */
+            width: 120px;
             height: auto;
-            margin-top: 20px;
+            margin-top: 40px;
+            opacity: 0.8;
         }
 
-        @media (max-width: 400px) {
-            h1 { font-size: 24px; }
-            .details, a, input, select, button { font-size: 16px; }
-            .footer-img { width: 40%; max-width: 150px; } /* Further reduce size for small screens */
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #C89B68, transparent);
+            margin: 40px auto;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 16px; }
+            .section { padding: 40px 20px; }
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+            .details strong { font-size: 24px; }
+            .details { font-size: 16px; }
+            .quote { font-size: 20px; }
+            .story { font-size: 16px; }
+            input, select, button { font-size: 16px; }
+            .footer-img { width: 100px; }
         }
     </style>
 </head>
 <body>
-    
-    <h1>Jste zváni</h1>
-    
-    <div class="details"><strong>Na svatbu Aničky & Vojty</strong></div>
-    <div class="details">Datum: 2. srpna 2025</div>
-    <div class="details">Čas obřadu: 12:00</div>
-    <div class="details">Místo: <a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></div>
+    <div class="container">
+        <!-- Main Info Section -->
+        <section class="section">
+            <h1>Jste zváni</h1>
+            <div class="details">
+                <strong>Na svatbu Aničky & Vojty</strong>
+                <div>2. srpna 2025</div>
+                <div>Obřad: 12:00</div>
+                <div><a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></div>
+            </div>
 
-    <form action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="c1eabb37-b92b-4e46-98ea-24aa8783b8a3">
-        
-        <input type="text" name="name" placeholder="Vaše jméno" required>
-        
-        <select name="attendance" required>
-            <option value="" disabled selected>Zúčastníte se?</option>
-            <option value="yes">Ano</option>
-            <option value="no">Ne</option>
-        </select>
-        
-        <select name="accommodation" required>
-            <option value="" disabled selected>Zůčastníte se přespání?</option>
-            <option value="yes">Ano</option>
-            <option value="no">Ne</option>
-        </select>
-        <div>Prosíme o kontakt pro případné doplňující informace.</div>
-        <input type="text" name="contact" placeholder="E-mail nebo telefon" required>
-        
-        <button type="submit">ODESLAT</button>
-    </form>
+            <div class="divider"></div>
+            <div class="story">
+                    Anička (A) a Vojta (V) splynou v jednu bytost (♥). Buďte u toho. Událost bude provázena hudbou, tancem, dobrým jídlem a pitím,
+                    zábavou v zámecké zahradě, večerním grilováním a poolnočním překvapením. Připravte si plavky, kapesníky (na osušení očí),
+                    ručník (na osušení těla).
+            </div>
+        </section>
+         <!-- Information Box Section -->
+        <section class="section">
+            <h2>Informace</h2>
+            <div class="info-box">
+                <p>Obřad se bude konat ve velkém sálu. Velký sál pro velké věci.</p>
+                <p>Ubytování bude připravené na zámku a po hostině bude prostor pro zabydlení se.</p>
+                <p>Dary preferujeme formou příspěvku na svatební cestu. Hlavní dárek je pro nás vaše účast, pozvali jsme ty 
+                    nejlepší lidi z našich životů a moc se na vás na všechny těšíme.
+                </p>
+            </div>
+            
+        </section>
+
+        <!-- Form Section -->
+        <section class="section">
+            <h2>Potvrzení účasti</h2>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="c1eabb37-b92b-4e46-98ea-24aa8783b8a3">
+                
+                <div class="form-group">
+                    <label for="name">Vaše jméno</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="extra_guests">Kolik vás bude?</label>
+                    <input type="number" id="extra_guests" name="extra_guests" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="accommodation">Můžeme s vámi počítat na přespání?</label>
+                    <select id="accommodation" name="accommodation" required>
+                        <option value="" disabled selected>Prosím vyberte</option>
+                        <option value="yes">Ano</option>
+                        <option value="no">Ne</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Kontakt pro případné doplňující informace</label>
+                    <input type="text" id="contact" name="contact" placeholder="E-mail nebo telefon" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="extra">Je něco dalšího, co bychom měli vědět?</label>
+                    <input type="text" id="extra" name="extra" placeholder="Alergie, jídelníček..." required>
+                </div>
+                
+                <button type="submit">Odeslat 🕊️</button>
+            </form>
+        </section>
+
+        <section class="section">
+            <h2>Kontakt</h2>
+            <div class="contact-footer">
+                Anička:<br>
+                +420 721 276 376<br>
+                anna.mikestikova@gmail.com
+            </div>
+        </section>
+    </div>
     
-    <!-- Dekorativní obrázek dole -->
     <img src="rose.png" alt="Dekorativní květinový motiv" class="footer-img">
-
 </body>
 </html>
