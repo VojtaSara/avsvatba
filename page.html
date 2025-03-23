@@ -1,42 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
+    <title>Svatební Pozvánka</title>
     <style>
         body {
-            background-color: black;
-            color: white;
-            font-family: monospace;
+            background-color: #FFF8F0; /* Jemná krémová */
+            color: #5C3D2E; /* Teplá hnědá */
+            font-family: "Garamond", serif;
             margin: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Full screen height */
-            text-align: center;
             flex-direction: column;
-            overflow: hidden; /* Disable scrolling */
+            align-items: center;
             padding: 20px;
+            overflow: hidden;
+        }
+
+        .banner {
+            width: 100%;
+            max-width: 800px;
         }
 
         h1 {
-            margin-bottom: 10px;
-            font-size: 24px;
+            color: #8B5E3C; /* Hlubší hnědozlatá */
+            margin: 20px 0 10px;
+            font-size: 28px;
         }
 
-        p {
+        .details {
             margin: 5px 0;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         a {
-            color: cyan;
+            color: #C89B68; /* Jemná zlatá */
             text-decoration: none;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         a:hover {
+            color: #A4764A;
             text-decoration: underline;
         }
 
@@ -49,32 +53,48 @@
         }
 
         input, select, button {
-            background-color: black;
+            background-color: #FAF0E6; /* Světle béžová */
+            color: #5C3D2E;
+            border: 1px solid #C89B68;
+            padding: 8px 12px;
+            font-family: "Garamond", serif;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #C89B68;
             color: white;
-            border: 1px solid white;
-            padding: 5px 10px;
-            font-family: monospace;
-            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
         }
 
         button:hover {
-            background-color: white;
-            color: black;
-            cursor: pointer;
+            background-color: #A4764A;
+        }
+
+        .footer-img {
+            width: 50%; /* Make it half the original width */
+            max-width: 200px; /* Limit maximum size */
+            height: auto;
+            margin-top: 20px;
         }
 
         @media (max-width: 400px) {
-            h1 { font-size: 20px; }
-            p, a, input, select, button { font-size: 14px; }
+            h1 { font-size: 24px; }
+            .details, a, input, select, button { font-size: 16px; }
+            .footer-img { width: 40%; max-width: 150px; } /* Further reduce size for small screens */
         }
     </style>
 </head>
 <body>
+    
     <h1>Jste zváni</h1>
-    <p><strong>Na svatbu Aničky & Vojty</strong></p>
-    <p>📅 Datum: 2. srpna 2025</p>
-    <p>🕒 Čas obřadu: 12:30</p>
-    <p>📍 Místo: <a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></p>
+    
+    <div class="details"><strong>Na svatbu Aničky & Vojty</strong></div>
+    <div class="details">Datum: 2. srpna 2025</div>
+    <div class="details">Čas obřadu: 12:00</div>
+    <div class="details">Místo: <a href="https://maps.google.com/?q=Zámek+Lnáře" target="_blank">Zámek Lnáře</a></div>
 
     <form action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="c1eabb37-b92b-4e46-98ea-24aa8783b8a3">
@@ -88,13 +108,18 @@
         </select>
         
         <select name="accommodation" required>
-            <option value="" disabled selected>Kde přespíte?</option>
-            <option value="zamek">Zámek</option>
-            <option value="stanove_mesto">Stanové město</option>
-            <option value="neprespim">Nepřespím</option>
+            <option value="" disabled selected>Zůčastníte se přespání?</option>
+            <option value="yes">Ano</option>
+            <option value="no">Ne</option>
         </select>
+        <div>Prosíme o kontakt pro případné doplňující informace.</div>
+        <input type="text" name="contact" placeholder="E-mail nebo telefon" required>
         
         <button type="submit">ODESLAT</button>
     </form>
+    
+    <!-- Dekorativní obrázek dole -->
+    <img src="rose.png" alt="Dekorativní květinový motiv" class="footer-img">
+
 </body>
 </html>
