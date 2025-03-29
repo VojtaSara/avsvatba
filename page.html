@@ -328,14 +328,11 @@
                     ručník (na osušení těla).
             </div>
         </section>
-        <div class="photo-container">
-            <img src="fotka.jpg" alt="Anička a Vojta" class="couple-photo">
-        </div>
 
         <!-- Panorama Section -->
         <section class="section">
             <h2>Místo konání</h2>
-            <div class="panorama-container" id="panorama"></div>
+            <iframe height="300px" width="100%" allowfullscreen="true" src="https://momento360.com/e/u/7c369dd112014fc58a53a542c413a17c"></iframe>
         </section>
          
          <!-- Information Box Section -->
@@ -427,6 +424,9 @@
                 +420 721 276 376<br>
                 anna.mikestikova@gmail.com
             </div>
+            <div class="photo-container">
+                <img src="fotka.jpg" alt="Anička a Vojta" class="couple-photo" width="50%">
+            </div>
         </section>
     </div>
     
@@ -456,79 +456,5 @@
             setInterval(updateCountdown, 1000);
         });
     </script>
-// Panorama Script
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.149.0/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/panolens/0.13.0/panolens.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // Add a slight delay to ensure libraries are fully loaded
-    setTimeout(function() {
-        if (typeof PANOLENS === 'undefined') {
-            console.error('PANOLENS library not loaded after delay.');
-            document.getElementById('panorama').innerHTML = '<p style="text-align: center; padding: 20px;">Nepodařilo se načíst panorama. Zkuste obnovit stránku.</p>';
-            return;
-        }
-        
-        // Initialize panorama viewer
-        initPanorama();
-    }, 500); // 500ms delay
-});
-
-function initPanorama() {
-    // Use your actual panorama image file
-    const panoramaImage = 'pano.png';
-    
-    // Create viewer
-    const viewer = new PANOLENS.Viewer({
-        container: document.getElementById('panorama'),
-        controlBar: false,
-        autoRotate: true,
-        autoRotateSpeed: 0.5,
-        enableReticle: false,
-        output: 'console',
-        enableViewportResize: true,
-    });
-
-    
-        
-        // Create panorama
-        const panorama = new PANOLENS.ImagePanorama(panoramaImage);
-        viewer.add(panorama);
-        
-        // Make responsive
-        function onWindowResize() {
-            viewer.onWindowResize();
-        }
-        
-        window.addEventListener('resize', onWindowResize, false);
-        
-        // Add event listeners for mouse and touch
-        const container = document.getElementById('panorama');
-        
-        // Pause auto-rotation when interacting
-        container.addEventListener('mousedown', function() {
-            viewer.autoRotate = false;
-        });
-        
-        container.addEventListener('touchstart', function() {
-            viewer.autoRotate = false;
-        });
-        
-        // Resume auto-rotation after 5 seconds of inactivity
-        let rotationTimer;
-        
-        function resumeRotation() {
-            clearTimeout(rotationTimer);
-            rotationTimer = setTimeout(function() {
-                viewer.autoRotate = true;
-            }, 5000);
-        }
-        
-        container.addEventListener('mouseup', resumeRotation);
-        container.addEventListener('touchend', resumeRotation);
-        
-        // ... rest of your code ...
-    }
-</script>
-</body>
+    </body>
 </html>
