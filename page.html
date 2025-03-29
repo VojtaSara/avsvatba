@@ -461,19 +461,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/panolens/0.13.0/panolens.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Use your actual panorama image file
-        const panoramaImage = 'pano.png';
+    // Add a slight delay to ensure libraries are fully loaded
+    setTimeout(function() {
+        if (typeof PANOLENS === 'undefined') {
+            console.error('PANOLENS library not loaded after delay.');
+            document.getElementById('panorama').innerHTML = '<p style="text-align: center; padding: 20px;">Nepodařilo se načíst panorama. Zkuste obnovit stránku.</p>';
+            return;
+        }
         
-        // Create viewer
-        const viewer = new PANOLENS.Viewer({
-            container: document.getElementById('panorama'),
-            controlBar: false,          // Hide control bar
-            autoRotate: true,           // Enable auto rotation
-            autoRotateSpeed: 0.5,       // Slow rotation speed
-            enableReticle: false,       // Disable reticle
-            output: 'console',          // Suppress verbose output
-            enableViewportResize: true, // Enable responsiveness
-        });
+        // Initialize panorama viewer
+        initPanorama();
+    }, 500); // 500ms delay
+});
+
+function initPanorama() {
+    // Use your actual panorama image file
+    const panoramaImage = 'pano.png';
+    
+    // Create viewer
+    const viewer = new PANOLENS.Viewer({
+        container: document.getElementById('panorama'),
+        controlBar: false,
+        autoRotate: true,
+        autoRotateSpeed: 0.5,
+        enableReticle: false,
+        output: 'console',
+        enableViewportResize: true,
+    });
+
+    
         
         // Create panorama
         const panorama = new PANOLENS.ImagePanorama(panoramaImage);
@@ -510,7 +526,9 @@
         
         container.addEventListener('mouseup', resumeRotation);
         container.addEventListener('touchend', resumeRotation);
-    });
+        
+        // ... rest of your code ...
+    }
 </script>
 </body>
 </html>
